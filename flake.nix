@@ -10,7 +10,7 @@
   outputs = { self, darwin, nixpkgs }: {
     darwinConfigurations."pepesl" = darwin.lib.darwinSystem {
       system = "x86_64-darwin";
-      modules = [ ./configuration.nix ];
+      modules = [ ./darwin-configuration.nix ];
     };
   };
 }
