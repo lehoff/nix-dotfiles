@@ -8,7 +8,7 @@
   };
 
   outputs = { self, darwin, nixpkgs }: {
-    darwinConfigurations."pepesl" = darwin.lib.darwinSystem {
+    darwinConfigurations."YOURHOSTNAME" = darwin.lib.darwinSystem {
       system = "x86_64-darwin";
       modules = [ ./darwin-configuration.nix ];
     };
