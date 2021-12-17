@@ -1,6 +1,7 @@
 { config, lib, pkgs, ... }:
 
 {
+  services.nix-daemon.enable = true;
 
   nix = {
     trustedUsers = [ "root" "lehoff" ];

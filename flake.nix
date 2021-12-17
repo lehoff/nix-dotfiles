@@ -8,9 +8,18 @@
   };
 
   outputs = { self, darwin, nixpkgs }: {
-    darwinConfigurations.mimer = darwin.lib.darwinSystem {
+    darwinConfigurations.mimer.localdomain = darwin.lib.darwinSystem {
       system = "x86_64-darwin";
-      modules = [ ./darwin-configuration.nix ];
+      modules = [ ./darwin-configuration.nix ]
+           ++ [
+               {
+                 networking = {
+                   hostName = "mimer";
+                   computerName = "mimer";
+                   localHostName = "mimer";
+                 };
+               }
+              ];
     };
   };
 }
