@@ -17,8 +17,40 @@
     };
   };
 
+  nixpkgs.config.allowUnfree = true;
+
+  environment = {
+    shells = [ pkgs.zsh ];
+    systemPackages = [ 
+      pkgs.zsh
+      pkgs.gcc
+      pkgs.ripgrep
+      pkgs.speedtest-cli
+    ];
+  };
+
+  users = {
+
+    nix.configureBuildUsers = true;
+    users = {
+      lehoff = {
+        home = "/Users/lehoff";
+        shell = pkgs.zsh;
+      };
+    };
+
+  };
+
+  programs = {
+    bash.enable = false;
+    zsh.enable = true;
+  };
+
   homebrew = {
+    brewPrefix = "/opt/homebrew/bin";
     enable = true;
+    global.brewfile = true;
+
     taps = [ "homebrew/core" "homebrew/cask" ];
 
     casks = [
@@ -35,10 +67,8 @@
       "mailmate"
       "qmk-toolbox"
       "reflector"
-      "ripgrep"
       "skim"
       "slack"
-      "speedtest-cli"
       "telegram"
       "ukelele"
       "whatsapp"
