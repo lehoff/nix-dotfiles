@@ -1,3 +1,3 @@
+https://nixos.org/channels/nixos-21.11 nixos
 https://github.com/LnL7/nix-darwin/archive/master.tar.gz darwin
-https://nixos.org/channels/nixos-unstable nixos
 https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
