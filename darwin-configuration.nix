@@ -123,6 +123,7 @@ in
         speedtest-cli
         ripgrep
         git
+        fasd
       ];
     };
     programs.zsh = {
