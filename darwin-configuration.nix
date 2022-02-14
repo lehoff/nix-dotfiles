@@ -108,6 +108,8 @@ in
       "whatsapp"
       "xmind"
       "zoom"
+      "skim"
+      # "dash" sha mismatch error... manual install
     ];
   };
 
@@ -124,6 +126,7 @@ in
         ripgrep
         git
         fasd
+        hub
       ];
     };
     programs.zsh = {
