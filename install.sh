@@ -1,28 +1,26 @@
-mkdir -p ~/.config/nixpkgs
+#!/bin/sh
+
 mkdir -p ~/.nixpkgs
 
-ln -s  $HOME/Repos/dot-files/darwin-configuration.nix $HOME/.nixpkgs/darwin-configuration.nix
-
-# Configure the channel
+# Configure the channels
 
 if ! grep -q nix-darwin ~/.nix-channels; then
   echo "https://github.com/LnL7/nix-darwin/archive/master.tar.gz darwin" >> ~/.nix-channels
 fi
-export NIX_PATH=darwin=$HOME/.nix-defexpr/channels/darwin:$NIX_PATH
 
-export NIX_PATH=darwin-config=$HOME/.nixpkgs/darwin-configuration.nix:$HOME/.nix-defexpr/channels:$NIX_PATH
+export NIX_PATH=darwin=$HOME/.nix-defexpr/channels/darwin:$NIX_PATH
+export NIX_PATH=darwin-config=$HOME/Repos/dot-files/darwin-configuration.nix:$HOME/.nix-defexpr/channels:$NIX_PATH
+
+if ! grep -q home-manager ~/.nix-channels; then
+  echo "https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager" >> ~/.nix-channels
+fi
+
+export NIX_PATH=home-manager=$HOME/.nix-defexpr/channels/home-manager:$NIX_PATH
+
 nix-channel --update
 
+nix-build https://github.com/LnL7/nix-darwin/archive/master.tar.gz -A installer
+./result/bin/darwin-installer
 
-echo $NIX_PATH
-nix-build '<darwin>' -A installer --out-link /tmp/nix-darwin && /tmp/nix-darwin/bin/darwin-installer
-
-# Isn't it supposed to do this? It doesn't.
-rm -rf /run/*
-ln -shf /nix/store/$(ls /nix/store | grep darwin-system- | grep -v drv | head -1) /run/current-system
-
-/run/current-system/sw/bin/darwin-rebuild switch
-
-# . /etc/static/bashrc
-export NIX_PATH=$HOME/.nix-defexpr/channels${NIX_PATH:+:}$NIX_PATH
-
+darwin-rebuild build --flake ./\#mimer
+darwin-rebuild switch --flake ./\#mimer
