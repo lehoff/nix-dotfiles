@@ -109,8 +109,13 @@ in
       "xmind"
       "zoom"
       "skim"
+      "wkhtmltopdf"
       # "dash" sha mismatch error... manual install
     ];
+
+    masApps = { 
+      Amphetamine = 937984704;
+    };
   };
 
   imports = [ <home-manager/nix-darwin> ];
@@ -127,6 +132,14 @@ in
         git
         fasd
         hub
+        nodejs
+        rebar3
+        # devops
+        skaffold
+        terraform
+        kind
+        kubectl
+        nodePackages.npm
       ];
     };
     programs.zsh = {
