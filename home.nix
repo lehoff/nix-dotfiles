@@ -45,9 +45,9 @@
       NIX_PATH =
         "darwin-config=$HOME/.nixpkgs/darwin-configuration.nix:$HOME/.nix-defexpr/channels\${NIX_PATH:+:}$NIX_PATH";
     };
-    initExtra = ''
-      ${builtins.readFile "/Users/lehoff/nix-dotfiles/dot-zshrc"}
-    '';
+    # initExtra = ''
+    # ${builtins.readFile "./dot-zshrc"}
+    # '';
   };
   programs.direnv = {
     enable = true;
