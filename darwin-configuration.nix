@@ -87,6 +87,7 @@ in
       "homebrew/cask-drivers"
     ];
 
+    brews = [ "mas" ];
     casks = [
       "bettertouchtool"
       "fork"
