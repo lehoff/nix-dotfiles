@@ -1,6 +1,8 @@
+#!/bin/sh
+
 #eval "$(direnv hook zsh)"
 # PATH=/Users/lehoff/.nix-profile/bin:/nix/var/nix/profiles/default/bin:$PATH
-eval "$(fasd --init auto)"
+# eval "$(fasd --init auto)"
 
 function rebuild_nix {
   darwin-rebuild build --flake ./\#$1

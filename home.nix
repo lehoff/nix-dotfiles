@@ -21,9 +21,22 @@
     nodePackages.npm
   ];
 
+  programs.bat.enable = true;
+
+  programs.neovim = {
+    enable = true;
+    vimAlias = true;
+    withNodeJs = true;
+    withRuby = true;
+    withPython3 = true;
+  };
+
   programs.zsh = {
     enable = true;
-    shellAliases = { ll = "ls -l"; };
+    shellAliases = {
+      ll = "ls -l";
+      cat = "bat";
+      };
     plugins = [{
       name = "zsh-nix-shell";
       file = "nix-shell.plugin.zsh";
