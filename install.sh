@@ -21,7 +21,7 @@ export NIX_PATH=home-manager=$HOME/.nix-defexpr/channels/home-manager:$NIX_PATH
 nix-channel --update
 
 nix-build https://github.com/LnL7/nix-darwin/archive/master.tar.gz -A installer
-relink-result-dir
+./relink-result-dir
 ./result/bin/darwin-installer
 
 /run/current-system/sw/bin/darwin-rebuild build --flake ./\#mimer
