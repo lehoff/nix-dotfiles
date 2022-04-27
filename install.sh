@@ -1,28 +1,17 @@
-#!/bin/sh
+#!/bin/bash
 
-mkdir -p ~/.nixpkgs
+# sh <(curl -L https://nixos.org/nix/install) --daemon
+# TODO clone wallepapers https://github.com/catppuccin/wallpapers.git
 
+DOT_FILES_REPO=$HOME/nix-dotfiles
 
-# Configure the channels
+sudo mv /etc/nix/nix.conf /etc/nix/nix.conf.ol
+sudo ln -s  $DOT_FILES_REPO/nix.conf /etc/nix/nix.conf
 
-if ! grep -q nix-darwin ~/.nix-channels; then
-  echo "https://github.com/LnL7/nix-darwin/archive/master.tar.gz darwin" >> ~/.nix-channels
-fi
+nix build .#darwinConfigurations.mimer.system
+./result/sw/bin/darwin-rebuild switch --flake .#mimer
+darwin-rebuild switch --flake .#mimer
 
-export NIX_PATH=darwin=$HOME/.nix-defexpr/channels/darwin:$NIX_PATH
-export NIX_PATH=darwin-config=$HOME/nix-dotfiles/darwin-configuration.nix:$HOME/.nix-defexpr/channels:$NIX_PATH
-
-if ! grep -q home-manager ~/.nix-channels; then
-  echo "https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager" >> ~/.nix-channels
-fi
-
-export NIX_PATH=home-manager=$HOME/.nix-defexpr/channels/home-manager:$NIX_PATH
-
-nix-channel --update
-
-nix-build https://github.com/LnL7/nix-darwin/archive/master.tar.gz -A installer
-./relink-result-dir
-./result/bin/darwin-installer
-
-/run/current-system/sw/bin/darwin-rebuild build --flake ./\#mimer
-/run/current-system/sw/bin/darwin-rebuild switch --flake ./\#mimer
+# maybe error
+# https://github.com/LnL7/nix-darwin/issues/451
+# monterrey requires you to switch the shell 'chsh -s /etc/profiles/per-user/pepo/bin/zsh'

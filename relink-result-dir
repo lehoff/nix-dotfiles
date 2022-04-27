@@ -1,3 +1,0 @@
-#!/bin/sh
-RESULTS_DIR=`find /nix/store -maxdepth 1 -type d -name '*darwin-installer'`
-ln -nsf $RESULTS_DIR result
