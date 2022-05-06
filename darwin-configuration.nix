@@ -45,10 +45,10 @@ in {
 
   nix = {
     trustedUsers = [ "root" "lehoff" ];
-    package = pkgs.nixUnstable;
+    package = pkgs.nix_2_4;
     extraOptions = ''
       experimental-features = nix-command flakes
-      extra-platforms = x86_64-darwin aarch64-darwin
+      extra-platforms = aarch64-darwin
       keep-outputs = true
       keep-derivations = true
     '';
