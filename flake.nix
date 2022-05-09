@@ -17,7 +17,7 @@
         {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
-          home-manager.users.lehoff = import ./home.nix;
+          home-manager.users.pepo = import ./home.nix;
         }
       ];
     in {
@@ -25,7 +25,7 @@
       darwinConfigurations = {
 
         "mimer" = darwin.lib.darwinSystem {
-          system = "aarch64-darwin";
+          system = "x86_64-darwin";
           modules = common ++ [
             ({ pkgs, config, ... }: {
               networking = {
