@@ -52,7 +52,7 @@
     # Review prezto and pure options
     prezto = {
       enable = true;
-      prompt.theme = "pure";
+      prompt.theme = "bart";
     };
 
     sessionVariables = {
