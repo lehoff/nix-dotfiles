@@ -19,7 +19,7 @@
   programs.zsh.enable = true;
 
   nix = {
-    trustedUsers = [ "root" "pepo" ];
+    trustedUsers = [ "root" "lehoff" ];
     package = pkgs.nixUnstable;
     extraOptions = ''
       experimental-features = nix-command flakes
