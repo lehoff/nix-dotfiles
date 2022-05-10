@@ -17,7 +17,7 @@
         {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
-          home-manager.users.pepo = import ./home.nix;
+          home-manager.users.lehoff = import ./home.nix;
         }
       ];
     in {
