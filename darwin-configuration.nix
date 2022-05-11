@@ -1,54 +1,28 @@
 { config, lib, pkgs, ... }:
 
-with lib;
+{
+  environment.shells = [ pkgs.zsh ];
 
-let
-  # from https://github.com/LnL7/nix-darwin/blob/master/modules/system/defaults-write.nix
-  isFloat = x:
-    isString x && builtins.match "^[+-]?([0-9]*[.])?[0-9]+$" x != null;
+  users = {
 
-  boolValue = x: if x then "YES" else "NO";
-
-  writeValue = value:
-    if isBool value then
-      "-bool ${boolValue value}"
-    else if isInt value then
-      "-int ${toString value}"
-    else if isFloat value then
-      "-float ${toString value}"
-    else if isString value then
-      "-string '${value}'"
-    else
-      throw "invalid value type";
-
-  writeDefault = domain: key: value:
-    "defaults write ${domain} '${key}' ${writeValue value}";
-in {
-
-  system = {
-    defaults = {
-      dock = {
-        orientation =
-          "right"; # remember to do a `killall Dock` if install.sh does not
+    nix.configureBuildUsers = true;
+    users = {
+      pepo = {
+        home = "/Users/pepo";
+        shell = pkgs.zsh;
       };
-      #    NSGlobalDomain = {
-      #      "com.apple.trackpad.TrackpadOrientationMode" = 1;
-      #    };
     };
   };
 
-  # Does not work atm. Done in install.sh instead.
-  #writeDefault "com.freron.MailMate" MmMessagesOutlineMoveStrategy "previous";
+  programs.bash.enable = false;
 
-  # Nix
-  services.nix-daemon.enable = true;
+  programs.zsh.enable = true;
 
   nix = {
     trustedUsers = [ "root" "lehoff" ];
-    package = pkgs.nix_2_4;
+    package = pkgs.nixUnstable;
     extraOptions = ''
       experimental-features = nix-command flakes
-      extra-platforms = aarch64-darwin
       keep-outputs = true
       keep-derivations = true
     '';
@@ -60,35 +34,71 @@ in {
 
   nixpkgs.config.allowUnfree = true;
 
-  environment = {
-    shells = [ pkgs.zsh ];
-    #systemPackages = with pkgs; [ 
-    #  zsh
-    #  gcc
-    #  ripgrep
-    #  speedtest-cli
-    #];
-  };
+  ############
+  #  System  #
+  ############
 
-  users = {
+  time.timeZone = "Europe/London";
 
-    nix.configureBuildUsers = true;
-    users = {
-      lehoff = {
-        home = "/Users/lehoff";
-        shell = pkgs.zsh;
+  system = {
+    defaults = {
+      NSGlobalDomain = {
+        "com.apple.mouse.tapBehavior" = 1;
+        AppleKeyboardUIMode = 3;
+        ApplePressAndHoldEnabled = true;
+        InitialKeyRepeat = 10;
+        KeyRepeat = 1;
+        NSAutomaticCapitalizationEnabled = false;
+        NSAutomaticDashSubstitutionEnabled = false;
+        NSAutomaticPeriodSubstitutionEnabled = false;
+        NSAutomaticQuoteSubstitutionEnabled = false;
+        NSAutomaticSpellingCorrectionEnabled = false;
+        NSNavPanelExpandedStateForSaveMode = true;
+        NSNavPanelExpandedStateForSaveMode2 = true;
+        _HIHideMenuBar = true;
+      };
+
+      screencapture.location = "/tmp";
+
+      dock = {
+        autohide = true;
+        mru-spaces = false;
+        orientation = "bottom";
+        showhidden = true;
+        static-only = true;
+      };
+
+      finder = {
+        AppleShowAllExtensions = true;
+        QuitMenuItem = true;
+        FXEnableExtensionChangeWarning = false;
+      };
+
+      trackpad = {
+        Clicking = true;
+        TrackpadThreeFingerDrag = false;
       };
     };
-
   };
 
+  ############
+  # SERVICES #
+  ############
+
+  services.nix-daemon.enable = true;
+
+  ############
+  # Homebrew #
+  ############
+
   homebrew = {
-    brewPrefix = "/opt/homebrew/bin";
     enable = true;
+    autoUpdate = true;
+    cleanup = "zap";
     global.brewfile = true;
+    global.noLock = true;
 
-    taps = [ "homebrew/core" "homebrew/cask" "homebrew/cask-drivers" ];
-
+    taps = [ "homebrew/core" "homebrew/cask" ];
     brews = [ "mas" ];
     casks = [
       "bettertouchtool"
@@ -102,7 +112,7 @@ in {
       "firefox"
       "iterm2"
       "mailmate"
-      "qmk-toolbox"
+      #"qmk-toolbox"
       "reflector"
       "skim"
       "slack"
@@ -116,9 +126,17 @@ in {
       # "dash" sha mismatch error... manual install
     ];
 
-    masApps = { Amphetamine = 937984704; };
+    masApps = {
+      Amphetamine = 937984704;
+      Pages = 409201541;
+      Keynote = 409183694;
+    };
   };
 
-  programs = { bash.enable = false; };
+  programs.nix-index.enable = true;
 
+  environment.variables.LANG = "en_GB.UTF-8";
+  environment.loginShell = "${pkgs.zsh}/bin/zsh -l";
+
+  services.activate-system.enable = true;
 }

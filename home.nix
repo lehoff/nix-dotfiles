@@ -1,57 +1,66 @@
-{ config, lib, pkgs, ... }: {
-
+{ config, pkgs, lib, ... }:
+{
   programs.home-manager.enable = true;
+
+  ############
+  # Packages #
+  ############
+
   home.packages = with pkgs; [
-    tree
-    yq
-    jq
-    direnv
-    speedtest-cli
-    ripgrep
-    git
-    fasd
-    hub
-    nodejs
-    rebar3
-    # devops
-    skaffold
-    terraform
-    kind
-    kubectl
-    nodePackages.npm
+   tree
+   yq
+   jq
+   direnv
+   speedtest-cli
+   ripgrep
+   git
+   fasd
+   hub
+   nodejs
+   rebar3
+   # devops
+   skaffold
+   terraform
+   kind
+   kubectl
+   nodePackages.npm
   ];
+
+  programs.direnv.enable = true;
+  programs.direnv.nix-direnv.enable = true;
+
+  programs.bat.enable = true;
+
+  programs.fzf.enable = true;
+
+  programs.lsd = {
+    enable = true;
+    enableAliases = true;
+  };
+
+  ###################
+  # SHELL/ZSH  ######
+  ###################
 
   programs.zsh = {
     enable = true;
-    shellAliases = { ll = "ls -l"; };
-    plugins = [{
-      name = "zsh-nix-shell";
-      file = "nix-shell.plugin.zsh";
-      src = pkgs.fetchFromGitHub {
-        owner = "chisui";
-        repo = "zsh-nix-shell";
-        rev = "v0.4.0";
-        sha256 = "037wz9fqmx0ngcwl9az55fgkipb745rymznxnssr3rx9irb6apzg";
-      };
-    }];
+    enableCompletion = true;
+    enableAutosuggestions = true;
 
+    history.extended = true;
+
+    # Review prezto and pure options
     prezto = {
       enable = true;
       prompt.theme = "bart";
     };
 
     sessionVariables = {
+      DOCKER_BUILDKIT = 1;
       ERL_AFLAGS = "-kernel shell_history enabled";
       NIX_PATH =
         "darwin-config=$HOME/.nixpkgs/darwin-configuration.nix:$HOME/.nix-defexpr/channels\${NIX_PATH:+:}$NIX_PATH";
+      FZF_DEFAULT_COMMAND = "rg --files --hidden --follow";
     };
-    # initExtra = ''
-    # ${builtins.readFile "./dot-zshrc"}
-    # '';
-  };
-  programs.direnv = {
-    enable = true;
-    nix-direnv.enable = true;
-    enableZshIntegration = true;
   };
 }
