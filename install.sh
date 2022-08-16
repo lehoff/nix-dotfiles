@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# for now install homebrew manually:
+# /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
 # sh <(curl -L https://nixos.org/nix/install) --daemon
 # TODO clone wallepapers https://github.com/catppuccin/wallpapers.git
 
