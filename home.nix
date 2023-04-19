@@ -18,13 +18,21 @@
    hub
    nodejs
    rebar3
+   asciidoctor-with-extensions
+   jre # needed for asciidoctor
+
+   #nodePackages.mermaid-cli
    # devops
+   docker
    skaffold
    terraform
    kind
    kubectl
    nodePackages.npm
+   imagemagick
   ];
+
+  home.stateVersion = "22.05";
 
   programs.direnv.enable = true;
   programs.direnv.nix-direnv.enable = true;
@@ -48,6 +56,11 @@
     enableAutosuggestions = true;
 
     history.extended = true;
+
+    initExtra = ''
+      PATH=/opt/homebrew/bin:$PATH
+      eval "$(fasd --init auto)"
+      '';
 
     # Review prezto and pure options
     prezto = {

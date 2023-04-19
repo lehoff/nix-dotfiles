@@ -55,7 +55,7 @@
         NSAutomaticSpellingCorrectionEnabled = false;
         NSNavPanelExpandedStateForSaveMode = true;
         NSNavPanelExpandedStateForSaveMode2 = true;
-        _HIHideMenuBar = true;
+        _HIHideMenuBar = false;
       };
 
       screencapture.location = "/tmp";
@@ -63,7 +63,7 @@
       dock = {
         autohide = true;
         mru-spaces = false;
-        orientation = "bottom";
+        orientation = "right";
         showhidden = true;
         static-only = true;
       };
@@ -76,7 +76,7 @@
 
       trackpad = {
         Clicking = true;
-        TrackpadThreeFingerDrag = false;
+        TrackpadThreeFingerDrag = true;
       };
     };
   };
@@ -103,19 +103,23 @@
     casks = [
       "bettertouchtool"
       "fork"
-      "visual-studio-code"
+       # uncomment on new machine
+      #"visual-studio-code"
       "alfred"
       "controlplane"
       "docker"
       "karabiner-elements"
       "vivaldi"
       "firefox"
+      "opera"
       "iterm2"
       "mailmate"
       #"qmk-toolbox"
       "reflector"
       "skim"
-      "slack"
+      "google-drive"
+       # uncomment on new machine
+      # "slack"
       "telegram"
       "ukelele"
       "whatsapp"
@@ -123,13 +127,27 @@
       "zoom"
       "skim"
       "wkhtmltopdf"
-      # "dash" sha mismatch error... manual install
+      "aldente"
+      "dash" 
+      "google-chrome"
+      "finicky"
+      "logseq"
+      # "rename"
+      "raycast"
+      "inkscape"
+      "gimp"
     ];
 
     masApps = {
       Amphetamine = 937984704;
       Pages = 409201541;
       Keynote = 409183694;
+      Numbers = 409203825;
+      Slack = 803453959;
+      Bitwarden = 1352778147;
+      Bear = 1091189122;
+      ToogleTrack = 1291898086;
+
     };
   };
 
@@ -138,5 +156,10 @@
   environment.variables.LANG = "en_GB.UTF-8";
   environment.loginShell = "${pkgs.zsh}/bin/zsh -l";
 
+  environment.systemPackages = [
+    pkgs.nodePackages.mermaid-cli
+  ];
+
   services.activate-system.enable = true;
 }
+

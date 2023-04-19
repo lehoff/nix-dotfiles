@@ -13,7 +13,7 @@ DOT_FILES_REPO=$HOME/nix-dotfiles
 sudo mv /etc/nix/nix.conf /etc/nix/nix.conf.old
 sudo ln -s  $DOT_FILES_REPO/nix.conf /etc/nix/nix.conf
 
-nix-build https://github.com/LnL7/nix-darwin/archive/master.tar.gz -A installer
+nix-build https://github.com/lehoff/nix-darwin/archive/master.tar.gz -A installer
 ./result/bin/darwin-installer
 # questions:
 # Would you like to edit the default configuration.nix before starting? [y/n] NO
