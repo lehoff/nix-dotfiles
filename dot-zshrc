@@ -1,5 +1,8 @@
 #eval "$(direnv hook zsh)"
 # PATH=/Users/lehoff/.nix-profile/bin:/nix/var/nix/profiles/default/bin:$PATH
+
+PATH=/opt/homebrew/bin:$PATH
+
 eval "$(fasd --init auto)"
 
 function rebuild_nix {
